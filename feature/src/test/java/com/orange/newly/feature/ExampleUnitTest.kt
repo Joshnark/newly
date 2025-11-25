@@ -1,4 +1,4 @@
-package com.orange.newly.ui
+package com.orange.newly.feature
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.orange.newly.theme
+package com.orange.newly.feature.shared
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -4,14 +4,18 @@ import com.orange.newly.domain.usecases.GetTopNewsUseCase
 import com.orange.newly.domain.usecases.SearchNewsUseCase
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
+@InstallIn(SingletonComponent::class)
 @Module
-abstract class DomainDI {
+class DomainDI {
 
-    @Binds
-    fun bindGetTopNewsUseCase(getTopNewsUseCase: GetTopNewsUseCase) = getTopNewsUseCase
+    @Provides
+    fun provideGetTopNewsUseCase(repository: NewsRepository) = GetTopNewsUseCase(repository)
 
-    @Binds
-    fun bindSearchNewsUseCase(searchNewsUseCase: SearchNewsUseCase) = searchNewsUseCase
+    @Provides
+    fun provideSearchNewsUseCase(repository: NewsRepository) = GetTopNewsUseCase(repository)
 
 }

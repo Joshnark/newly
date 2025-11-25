@@ -3,6 +3,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.devtools)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -34,14 +37,23 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
     implementation(projects.domain)
+    implementation(platform(libs.androidx.compose.bom))
+
+    implementation(libs.bundles.compose)
+    implementation(libs.bundles.lifecycle)
+    implementation(libs.bundles.navigation)
+    debugImplementation(libs.bundles.compose.debug)
+    testImplementation(libs.bundles.compose.test)
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    implementation(libs.kotlin.serialization.json)
 
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
