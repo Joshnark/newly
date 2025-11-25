@@ -1,4 +1,4 @@
-package com.orange.newly.ui.theme
+package com.orange.newly.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

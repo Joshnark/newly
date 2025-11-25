@@ -1,4 +1,4 @@
-package com.orange.newly.ui.theme
+package com.orange.newly.theme
 
 import androidx.compose.ui.graphics.Color
 
