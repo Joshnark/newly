@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Module
 class ApiModule {
     @Provides
-    fun provideBaseUrl(): String = "https://newsapi.org/v2/"
+    fun provideBaseUrl(): String = "https://api.nytimes.com/svc/"
 
     @Provides
     fun provideInterceptor(): AuthInterceptor {

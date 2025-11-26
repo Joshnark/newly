@@ -1,6 +1,5 @@
 package com.orange.newly.data.mappers
 
-import androidx.lifecycle.liveData
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.orange.newly.data.models.NewEntity
@@ -12,7 +11,7 @@ fun NewEntity.toDomain() = New(
     content = this.content,
     description = this.description,
     publishedAt = this.publishedAt,
-    source = this.source,
+    source = this.source.orEmpty(),
     url = this.url,
     urlToImage = this.urlToImage,
 )

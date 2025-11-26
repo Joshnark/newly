@@ -39,6 +39,9 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
 
+    implementation(platform(libs.result4k.bom))
+    implementation(libs.result4k)
+
     implementation(libs.bundles.paging)
 
     implementation(libs.hilt)

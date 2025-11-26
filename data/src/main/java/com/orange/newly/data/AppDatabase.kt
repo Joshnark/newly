@@ -4,16 +4,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.orange.newly.data.dao.TopNewsDao
+import com.orange.newly.data.dao.NewsDao
 import com.orange.newly.data.models.NewEntity
 
 @Database(
     entities = [NewEntity::class],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase: RoomDatabase() {
-    abstract fun getNewsDao(): TopNewsDao
+    abstract fun getNewsDao(): NewsDao
 
     companion object {
         fun build(context: Context, name: String): AppDatabase {
@@ -21,7 +21,7 @@ abstract class AppDatabase: RoomDatabase() {
                 context,
                 AppDatabase::class.java,
                 name
-            ).build()
+            ).fallbackToDestructiveMigration(true).build()
         }
     }
 }

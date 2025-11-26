@@ -5,6 +5,6 @@ import com.orange.newly.feature.bookmark.BookmarkRoute
 import com.orange.newly.feature.news.NewsRoute
 
 sealed class HomeNavOption(val route: NavigationRoute) {
-    data object TopNews: HomeNavOption(NewsRoute)
+    data object News: HomeNavOption(NewsRoute)
     data object Bookmark: HomeNavOption(BookmarkRoute)
 }

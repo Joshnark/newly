@@ -2,7 +2,7 @@ package com.orange.newly.data.di
 
 import android.content.Context
 import com.orange.newly.data.AppDatabase
-import com.orange.newly.data.dao.TopNewsDao
+import com.orange.newly.data.dao.NewsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,7 +33,7 @@ class DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideTopNewsDao(appDatabase: AppDatabase): TopNewsDao {
+    fun provideTopNewsDao(appDatabase: AppDatabase): NewsDao {
         return appDatabase.getNewsDao()
     }
 

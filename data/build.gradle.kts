@@ -48,6 +48,9 @@ dependencies {
     testImplementation(libs.room.test)
     testImplementation(libs.paging.test)
 
+    implementation(platform(libs.result4k.bom))
+    implementation(libs.result4k)
+
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
     ksp(libs.room.compiler)

@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.orange.newly.data.INITIAL_PAGE
 import com.orange.newly.data.datasources.NewsDataSource
-import com.orange.newly.data.models.NewDto
+import com.orange.newly.data.models.PopularNewDto
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -12,7 +12,7 @@ import dagger.assisted.AssistedInject
 class SearchNewsPagingSource @AssistedInject constructor(
     private val dataSource: NewsDataSource,
     @Assisted private val query: String
-): PagingSource<Int, NewDto>() {
+): PagingSource<Int, PopularNewDto>() {
 
     @AssistedFactory
     interface Factory {
@@ -21,7 +21,7 @@ class SearchNewsPagingSource @AssistedInject constructor(
 
     override suspend fun load(
         params: LoadParams<Int>
-    ): LoadResult<Int, NewDto> {
+    ): LoadResult<Int, PopularNewDto> {
         return runCatching {
             val page = params.key ?: INITIAL_PAGE
             val items = dataSource.searchNews(query, page)
@@ -36,7 +36,7 @@ class SearchNewsPagingSource @AssistedInject constructor(
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, NewDto>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, PopularNewDto>): Int? {
         return state.anchorPosition
     }
 

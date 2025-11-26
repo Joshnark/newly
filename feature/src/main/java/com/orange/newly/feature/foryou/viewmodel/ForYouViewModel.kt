@@ -35,10 +35,4 @@ class ForYouViewModel @Inject constructor(
         initialValue = PagingData.empty()
     )
 
-    fun setIntent(intent: ForYouIntent) {
-        when(intent) {
-            is ForYouIntent.LoadLocalizedNews -> Unit
-        }
-    }
-
 }

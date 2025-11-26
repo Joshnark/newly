@@ -45,6 +45,7 @@ android {
 dependencies {
     implementation(projects.domain)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(platform(libs.result4k.bom))
 
     implementation(libs.bundles.compose)
     implementation(libs.bundles.lifecycle)
@@ -53,6 +54,7 @@ dependencies {
     implementation(libs.bundles.paging)
     debugImplementation(libs.bundles.compose.debug)
     testImplementation(libs.bundles.compose.test)
+    implementation(libs.result4k)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlin.serialization.json)

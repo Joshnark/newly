@@ -5,12 +5,12 @@ import okhttp3.Response
 
 class AuthInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val originalRequest = chain.request()
-        val token = "12a8c574114c4d33a8cd4c550f4c9695"
+        val token = "PMWMTmmyxLENvwSH8ThdgBST46fGxahA"
 
-        val authenticatedRequest = originalRequest.newBuilder()
-            .header("Authorization", "Bearer $token")
-            .build()
+        val request = chain.request()
+        val url = request.url.newBuilder().addQueryParameter("api-key",token).build();
+        val authenticatedRequest = request.newBuilder().url(url).build()
+
         return chain.proceed(authenticatedRequest)
     }
 }

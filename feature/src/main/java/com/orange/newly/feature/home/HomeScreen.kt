@@ -22,7 +22,7 @@ val navigationItems = listOf(
     HomeNavItem(
         title = "News",
         icon = Icons.Default.Home,
-        route = HomeNavOption.TopNews
+        route = HomeNavOption.News
     ),
     HomeNavItem(
         title = "Bookmark",
@@ -64,7 +64,7 @@ fun HomeScreen() {
             userScrollEnabled = false
         ) { page ->
             when(navigationItems[page].route) {
-                is HomeNavOption.TopNews -> NewsPage()
+                is HomeNavOption.News -> NewsPage()
                 is HomeNavOption.Bookmark -> BookmarkPage()
             }
         }

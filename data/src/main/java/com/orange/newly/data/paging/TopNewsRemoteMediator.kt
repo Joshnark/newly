@@ -7,7 +7,7 @@ import androidx.paging.RemoteMediator
 import com.orange.newly.data.INITIAL_PAGE
 import com.orange.newly.data.datasources.NewsDataSource
 import com.orange.newly.data.datastores.NewsDataStore
-import com.orange.newly.data.mappers.toEntities
+import com.orange.newly.data.mappers.toEntity
 import com.orange.newly.data.models.NewEntity
 import com.orange.newly.domain.models.Category
 import dagger.assisted.Assisted
@@ -33,15 +33,11 @@ class TopNewsRemoteMediator @AssistedInject constructor(
         return runCatching {
             val page = when (loadType) {
                 LoadType.REFRESH -> INITIAL_PAGE
-                LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
-                LoadType.APPEND -> {
-                    state.lastItemOrNull()?.let {
-                        (state.pages.sumOf { it.data.size } / state.config.pageSize) + 1
-                    } ?: return MediatorResult.Success(endOfPaginationReached = true)
-                }
+                LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = false)
+                LoadType.APPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             }
 
-            val items = dataSource.getTopNews(category, page, state.config.pageSize).toEntities(category)
+            val items = dataSource.getTopNews(category, page, state.config.pageSize).toEntity(category, page)
             dataStore.addTopNews(items, loadType == LoadType.REFRESH)
 
             MediatorResult.Success(endOfPaginationReached = items.isEmpty())

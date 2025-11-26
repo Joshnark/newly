@@ -12,7 +12,7 @@ class GetTopNewsUseCase @Inject constructor(
 ) {
 
     operator fun invoke(category: Category = Category.GENERAL): Flow<PagingData<New>> {
-        return newsRepository.getTopNews(category)
+        return newsRepository.getSectionNews(category)
     }
 
 }

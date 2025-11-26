@@ -21,6 +21,7 @@ hilt = "2.57.2"
 devtools = "2.2.21-2.0.4"
 paging = "3.3.6"
 coil = "3.3.0"
+result = "2.23.0.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -82,6 +83,10 @@ room-test = { group = "androidx.room", name = "room-testing", version.ref = "roo
 # Image Loading
 coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
+
+# Result
+result4k-bom = { group = "dev.forkhandles", name = "forkhandles-bom", version.ref = "result" }
+result4k = { group = "dev.forkhandles", name = "result4k", version.ref="result"}
 
 [bundles]
 room = [ "room-runtime", "room-ktx", "room-paging" ]
