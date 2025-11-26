@@ -60,7 +60,8 @@ fun HomeScreen() {
     ) { paddingValues ->
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues),
+            userScrollEnabled = false
         ) { page ->
             when(navigationItems[page].route) {
                 is HomeNavOption.TopNews -> NewsPage()

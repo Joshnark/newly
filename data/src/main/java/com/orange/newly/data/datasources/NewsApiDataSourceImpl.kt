@@ -13,8 +13,12 @@ class NewsApiDataSourceImpl @Inject constructor(
         return api.getAllNews().articles
     }
 
-    override suspend fun getTopNews(category: Category, page: Int): List<NewDto> {
-        return api.getTopNews().articles
+    override suspend fun getTopNews(category: Category, page: Int, pageSize: Int): List<NewDto> {
+        return api.getTopNews(
+            category = category.value,
+            page = page,
+            pageSize = pageSize
+        ).articles
     }
 
 }

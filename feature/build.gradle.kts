@@ -49,6 +49,8 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.lifecycle)
     implementation(libs.bundles.navigation)
+    implementation(libs.bundles.coil)
+    implementation(libs.bundles.paging)
     debugImplementation(libs.bundles.compose.debug)
     testImplementation(libs.bundles.compose.test)
 

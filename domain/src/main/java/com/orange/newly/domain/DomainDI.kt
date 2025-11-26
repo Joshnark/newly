@@ -16,6 +16,6 @@ class DomainDI {
     fun provideGetTopNewsUseCase(repository: NewsRepository) = GetTopNewsUseCase(repository)
 
     @Provides
-    fun provideSearchNewsUseCase(repository: NewsRepository) = GetTopNewsUseCase(repository)
+    fun provideSearchNewsUseCase(repository: NewsRepository) = SearchNewsUseCase(repository)
 
 }

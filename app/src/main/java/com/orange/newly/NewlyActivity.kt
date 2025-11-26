@@ -11,8 +11,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.orange.newly.navigation.NewlyNavGraph
 import com.orange.newly.feature.shared.NewlyTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : ComponentActivity() {
+@AndroidEntryPoint
+class NewlyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

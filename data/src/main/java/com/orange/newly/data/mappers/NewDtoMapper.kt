@@ -9,13 +9,13 @@ import com.orange.newly.domain.models.New
 
 fun NewDto.toEntities(category: Category?) = NewEntity(
     title = this.title,
-    author = this.author,
-    content = this.content,
-    description = this.description,
+    author = this.author.orEmpty(),
+    content = this.content.orEmpty(),
+    description = this.description.orEmpty(),
     publishedAt = this.publishedAt,
-    source = this.source.name,
-    url = this.url,
-    urlToImage = this.urlToImage,
+    source = this.source?.name.orEmpty(),
+    url = this.url.orEmpty(),
+    urlToImage = this.urlToImage.orEmpty(),
     category = category
 )
 
@@ -23,13 +23,13 @@ fun List<NewDto>.toEntities(category: Category? = null) = this.map { it.toEntiti
 
 fun NewDto.toDomain() = New(
     title = this.title,
-    author = this.author,
-    content = this.content,
-    description = this.description,
+    author = this.author.orEmpty(),
+    content = this.content.orEmpty(),
+    description = this.description.orEmpty(),
     publishedAt = this.publishedAt,
-    source = this.source.name,
-    url = this.url,
-    urlToImage = this.urlToImage,
+    source = this.source?.name.orEmpty(),
+    url = this.url.orEmpty(),
+    urlToImage = this.urlToImage.orEmpty(),
 )
 
 

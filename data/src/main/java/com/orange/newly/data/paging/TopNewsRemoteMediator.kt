@@ -41,7 +41,7 @@ class TopNewsRemoteMediator @AssistedInject constructor(
                 }
             }
 
-            val items = dataSource.getTopNews(category, page).toEntities(category)
+            val items = dataSource.getTopNews(category, page, state.config.pageSize).toEntities(category)
             dataStore.addTopNews(items, loadType == LoadType.REFRESH)
 
             MediatorResult.Success(endOfPaginationReached = items.isEmpty())

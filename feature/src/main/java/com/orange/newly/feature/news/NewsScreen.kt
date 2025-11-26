@@ -25,9 +25,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.orange.newly.domain.models.Category
+import com.orange.newly.feature.news.widgets.ForYouPage
+import com.orange.newly.feature.news.widgets.TopNewsPage
 import com.orange.newly.feature.shared.NewlyTheme
-import com.orange.newly.feature.foryou.ForYouPage
-import com.orange.newly.feature.topnews.TopNewsPage
 import kotlinx.coroutines.launch
 
 @Composable
@@ -61,7 +61,6 @@ fun NewsScreen() {
 
         HorizontalPager(
             state = pagerState,
-            contentPadding = PaddingValues(4.dp),
             userScrollEnabled = false
         ) { page ->
             when(categories[page]) {
@@ -76,7 +75,7 @@ fun NewsScreen() {
 fun Categories(categories: List<Category>, selectedNavigationIndex: Int, onClick: (Category) -> Unit) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
-        contentPadding = PaddingValues(4.dp)
+        contentPadding = PaddingValues(8.dp)
     ) {
         items(categories) {
             CategoryItem(
