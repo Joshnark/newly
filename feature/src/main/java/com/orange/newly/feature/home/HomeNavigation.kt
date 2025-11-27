@@ -8,8 +8,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object HomeRoute: NavigationRoute
 
-fun NavGraphBuilder.homePage() {
+fun NavGraphBuilder.homePage(navigate: (NavigationRoute) -> Unit) {
     composable<HomeRoute> {
-        HomeScreen()
+        HomeScreen(navigate)
     }
 }

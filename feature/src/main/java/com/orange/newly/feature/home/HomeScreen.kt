@@ -16,6 +16,8 @@ import com.orange.newly.feature.home.models.HomeNavItem
 import com.orange.newly.feature.home.widgets.BottomNavBar
 import com.orange.newly.feature.home.widgets.Topbar
 import com.orange.newly.feature.news.NewsPage
+import com.orange.newly.feature.search.SearchRoute
+import com.orange.newly.feature.shared.NavigationRoute
 import kotlinx.coroutines.launch
 
 val navigationItems = listOf(
@@ -34,7 +36,7 @@ val navigationItems = listOf(
 const val HOME_INITIAL_PAGE = 0
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navigate: (NavigationRoute) -> Unit) {
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(
         pageCount = {
@@ -45,7 +47,10 @@ fun HomeScreen() {
 
     Scaffold(
         topBar = {
-            Topbar()
+            Topbar(
+                onSearch = { navigate.invoke(SearchRoute) },
+                onMenu = {}
+            )
         },
         bottomBar = {
             BottomNavBar(

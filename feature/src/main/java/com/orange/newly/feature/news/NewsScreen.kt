@@ -25,8 +25,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.orange.newly.domain.models.Category
+import com.orange.newly.feature.news.widgets.Categories
 import com.orange.newly.feature.news.widgets.ForYouPage
 import com.orange.newly.feature.news.widgets.CategoryNewsPage
+import com.orange.newly.feature.shared.Sizes
+import com.orange.newly.feature.shared.extensions.paddingSmall
 import com.orange.newly.feature.shared.theme.NewlyTheme
 import kotlinx.coroutines.launch
 
@@ -65,60 +68,11 @@ fun NewsScreen() {
         ) { page ->
             when(categories[page]) {
                 Category.HOME -> ForYouPage()
-                else -> CategoryNewsPage()
+                else -> CategoryNewsPage(categories[page])
             }
         }
     }
 }
-
-@Composable
-fun Categories(categories: List<Category>, selectedNavigationIndex: Int, onClick: (Category) -> Unit) {
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-        contentPadding = PaddingValues(8.dp)
-    ) {
-        items(categories) {
-            CategoryItem(
-                category = it,
-                isSelected = categories.indexOf(it) == selectedNavigationIndex,
-                onClick = onClick
-            )
-        }
-    }
-}
-
-@Composable
-fun CategoryItem(category: Category, isSelected: Boolean, onClick: (Category) -> Unit) {
-    Box(
-        modifier = Modifier
-            .background(
-                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
-                shape = RoundedCornerShape(5.dp)
-            ).padding(
-                4.dp
-            ).clickable(
-                onClick = {
-                    onClick.invoke(category)
-                }
-            )
-        ,
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = category.title,
-            style = TextStyle(
-                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
-            )
-        )
-    }
-}
-
-val Category.title
-    get() = when(this) {
-        Category.HOME -> "For you"
-        else -> this.value
-    }
 
 @Preview
 @Composable

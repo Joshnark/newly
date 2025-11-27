@@ -5,14 +5,19 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.orange.newly.data.INITIAL_PAGE
+import com.orange.newly.data.NYTIMES_LIMIT_PAGE
 import com.orange.newly.data.datasources.NewsDataSource
 import com.orange.newly.data.datastores.NewsDataStore
 import com.orange.newly.data.mappers.toEntity
 import com.orange.newly.data.models.NewEntity
+import com.orange.newly.data.models.NewsPaginationStateEntity
 import com.orange.newly.domain.models.Category
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import dev.forkhandles.result4k.Failure
+import dev.forkhandles.result4k.Success
+import dev.forkhandles.result4k.resultFrom
 
 @OptIn(ExperimentalPagingApi::class)
 class CategoryNewsRemoteMediator @AssistedInject constructor(
@@ -34,13 +39,35 @@ class CategoryNewsRemoteMediator @AssistedInject constructor(
             val page = when (loadType) {
                 LoadType.REFRESH -> INITIAL_PAGE
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = false)
-                LoadType.APPEND -> return MediatorResult.Success(endOfPaginationReached = true)
+                LoadType.APPEND -> {
+                    val pageState = dataStore.getCategoryNewsPaginationState(category)
+                    pageState?.currentPage?.plus(1) ?: INITIAL_PAGE
+                }
             }
 
-//            val items = dataSource.get(category, page, state.config.pageSize).toEntity(category, page)
-//            dataStore.addTopNews(items, loadType == LoadType.REFRESH)
+            val result = resultFrom { dataSource.getNewsByCategory(category, page) }
 
-            MediatorResult.Success(endOfPaginationReached = true)
+            when(result) {
+                is Failure -> {
+                    MediatorResult.Error(result.reason)
+                }
+                is Success -> {
+                    if (loadType == LoadType.REFRESH) {
+                        dataStore.refreshCategoryNews(category)
+                    }
+
+                    dataStore.addCategoryNews(result.value.toEntity(), category)
+
+                    dataStore.insertCategoryNewsPaginationState(
+                        NewsPaginationStateEntity(
+                            category = category,
+                            currentPage = page
+                        )
+                    )
+
+                    MediatorResult.Success(endOfPaginationReached = page >= NYTIMES_LIMIT_PAGE)
+                }
+            }
         }.getOrElse { exception ->
             MediatorResult.Error(exception)
         }

@@ -6,6 +6,7 @@ import androidx.navigation.compose.rememberNavController
 import com.orange.newly.feature.home.homePage
 import com.orange.newly.feature.onboarding.OnboardingRoute
 import com.orange.newly.feature.onboarding.onboardingPage
+import com.orange.newly.feature.search.searchPage
 
 @Composable
 fun NewlyNavGraph() {
@@ -16,6 +17,7 @@ fun NewlyNavGraph() {
         startDestination = OnboardingRoute
     ) {
         onboardingPage(navController::navigate)
-        homePage()
+        homePage(navController::navigate)
+        searchPage()
     }
 }

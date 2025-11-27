@@ -10,6 +10,5 @@ import com.orange.newly.domain.models.Category
 data class NewsPaginationStateEntity(
     @PrimaryKey val category: Category,
     val currentPage: Int,
-    val nextPage: Int?,
     val lastUpdated: Long = System.currentTimeMillis()
 )

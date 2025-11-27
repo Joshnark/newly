@@ -1,51 +1,65 @@
 package com.orange.newly.data.datasources
 
 import com.orange.newly.data.api.NewsApi
-import com.orange.newly.data.errors.NetworkError
+import com.orange.newly.data.errors.NetworkException
+import com.orange.newly.data.errors.TooManyRequestsException
 import com.orange.newly.data.models.PopularNewDto
 import com.orange.newly.data.models.SearchNewDto
 import com.orange.newly.data.models.TopNewDto
-import com.orange.newly.domain.errors.AppError
 import com.orange.newly.domain.models.Category
-import dev.forkhandles.result4k.Failure
-import dev.forkhandles.result4k.Result
-import dev.forkhandles.result4k.Success
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class NewsApiDataSourceImpl @Inject constructor(
     val api: NewsApi
 ): NewsDataSource {
 
-    override suspend fun getPopularNews(): Result<List<PopularNewDto>, AppError> {
+    override suspend fun getPopularNews(): List<PopularNewDto> {
         return runCatching {
-            Success(api.getPopularNews().results)
-        }.getOrElse {
-            Failure(NetworkError)
+            api.getPopularNews().results
+        }.getOrElse { exception ->
+            throw if (exception is HttpException && exception.code() == 429) {
+                TooManyRequestsException()
+            } else {
+                NetworkException(exception)
+            }
         }
     }
 
-    override suspend fun getTopNews(): Result<List<TopNewDto>, AppError> {
+    override suspend fun getTopNews(): List<TopNewDto> {
         return runCatching {
-            Success(api.getTopNews().results)
-        }.getOrElse {
-            Failure(NetworkError)
+            api.getTopNews().results
+        }.getOrElse { exception ->
+            throw if (exception is HttpException && exception.code() == 429) {
+                TooManyRequestsException()
+            } else {
+                NetworkException(exception)
+            }
         }
     }
 
-    override suspend fun getNewsByCategory(category: Category): Result<List<SearchNewDto>, AppError> {
-        val deskCategory = "desk:\"${category.value}\""
+    override suspend fun getNewsByCategory(category: Category, page: Int): List<SearchNewDto> {
+        val deskCategory = "desk:${category.value}"
         return runCatching {
-            Success(api.getNewsByCategory(deskCategory).response.docs)
-        }.getOrElse {
-            Failure(NetworkError)
+            api.getNewsByCategory(deskCategory, page).response.docs
+        }.getOrElse { exception ->
+            throw if (exception is HttpException && exception.code() == 429) {
+                TooManyRequestsException()
+            } else {
+                NetworkException(exception)
+            }
         }
     }
 
-    override suspend fun searchNews(query: String): Result<List<SearchNewDto>, AppError> {
+    override suspend fun searchNews(query: String, page: Int): List<SearchNewDto> {
         return runCatching {
-            Success(api.searchNews(query).response.docs)
-        }.getOrElse {
-            Failure(NetworkError)
+            api.searchNews(query, page).response.docs
+        }.getOrElse { exception ->
+            throw if (exception is HttpException && exception.code() == 429) {
+                TooManyRequestsException()
+            } else {
+                NetworkException(exception)
+            }
         }
     }
 

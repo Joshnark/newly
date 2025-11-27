@@ -44,4 +44,11 @@ interface NewsDao {
     """)
     fun getCategoryNews(category: Category): PagingSource<Int, NewEntity>
 
+    @Query("""
+        DELETE FROM news WHERE id NOT IN (
+            SELECT DISTINCT newId FROM news_entries
+        )
+    """)
+    fun clean()
+
 }

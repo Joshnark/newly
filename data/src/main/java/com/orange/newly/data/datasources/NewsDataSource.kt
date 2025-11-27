@@ -8,8 +8,8 @@ import com.orange.newly.domain.models.Category
 import dev.forkhandles.result4k.Result
 
 interface NewsDataSource {
-    suspend fun getPopularNews(): Result<List<PopularNewDto>, AppError>
-    suspend fun getTopNews(): Result<List<TopNewDto>, AppError>
-    suspend fun getNewsByCategory(category: Category): Result<List<SearchNewDto>, AppError>
-    suspend fun searchNews(query: String): Result<List<SearchNewDto>, AppError>
+    suspend fun getPopularNews(): List<PopularNewDto>
+    suspend fun getTopNews(): List<TopNewDto>
+    suspend fun getNewsByCategory(category: Category, page: Int): List<SearchNewDto>
+    suspend fun searchNews(query: String, page: Int): List<SearchNewDto>
 }

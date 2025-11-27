@@ -12,14 +12,14 @@ data class SearchResponseData(
 )
 
 data class SearchNewDto(
-    val abstract: String,
+    val abstract: String?,
     val byline: Byline?,
-    val headline: Headline,
+    val headline: Headline?,
     @SerializedName("pub_data")
-    val publicationDate: String,
+    val publicationDate: String?,
     @SerializedName("web_url")
     val webUrl: String,
-    val source: String,
+    val source: String?,
     val multimedia: SearchMultimediaDto?
 )
 

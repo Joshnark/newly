@@ -13,7 +13,7 @@ import com.orange.newly.data.models.NewsPaginationStateEntity
 
 @Database(
     entities = [NewEntity::class, NewEntryEntity::class, NewsPaginationStateEntity::class],
-    version = 4,
+    version = 6,
     exportSchema = false
 )
 abstract class AppDatabase: RoomDatabase() {

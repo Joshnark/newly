@@ -1,5 +1,6 @@
 package com.orange.newly.data.errors
 
-import com.orange.newly.domain.errors.AppError
+import java.lang.Exception
 
-data object NetworkError: AppError
+class NetworkException(reason: Throwable): Exception()
+class TooManyRequestsException: Exception()

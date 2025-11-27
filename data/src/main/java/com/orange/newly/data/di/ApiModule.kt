@@ -1,12 +1,16 @@
 package com.orange.newly.data.di
 
+import android.content.Context
+import com.orange.newly.data.BuildConfig
 import com.orange.newly.data.api.AuthInterceptor
 import com.orange.newly.data.api.NewsApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -23,12 +27,26 @@ class ApiModule {
     }
 
     @Provides
+    fun provideLogginInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            setLevel(HttpLoggingInterceptor.Level.BODY)
+        }
+    }
+
+    @Provides
     fun provideAuthOkHttpClient(
-        authInterceptor: AuthInterceptor
+        @ApplicationContext context: Context,
+        authInterceptor: AuthInterceptor,
+        httpLoggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
-        return OkHttpClient.Builder()
+        val client = OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
-            .build()
+
+        if (BuildConfig.DEBUG) {
+            client.addInterceptor(httpLoggingInterceptor)
+        }
+
+        return client.build()
     }
 
 

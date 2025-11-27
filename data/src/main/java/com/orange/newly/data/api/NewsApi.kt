@@ -16,12 +16,13 @@ interface NewsApi {
 
     @GET("search/v2/articlesearch.json")
     suspend fun getNewsByCategory(
-        @Query("fq") desk: String
+        @Query("fq") desk: String,
+        @Query("page") page: Int
     ): SearchNewsResponse
-
 
     @GET("search/v2/articlesearch.json")
     suspend fun searchNews(
-        @Query("q") query: String
+        @Query("q") query: String,
+        @Query("page") page: Int
     ): SearchNewsResponse
 }

@@ -7,10 +7,10 @@ import com.orange.newly.domain.models.New
 
 fun NewEntity.toDomain() = New(
     title = this.title,
-    author = this.author,
-    content = this.content,
-    description = this.description,
-    publishedAt = this.publishedAt,
+    author = this.author.orEmpty(),
+    content = this.content.orEmpty(),
+    description = this.description.orEmpty(),
+    publishedAt = this.publishedAt.orEmpty(),
     source = this.source.orEmpty(),
     url = this.url,
     urlToImage = this.urlToImage,

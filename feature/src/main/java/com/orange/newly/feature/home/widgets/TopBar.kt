@@ -1,5 +1,6 @@
 package com.orange.newly.feature.home.widgets
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -16,20 +17,23 @@ import com.orange.newly.feature.shared.theme.NewlyTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Topbar() {
+fun Topbar(
+    onSearch: () -> Unit,
+    onMenu: () -> Unit
+) {
     TopAppBar(
         title = {
             Text(
-                text = "Small Top App Bar",
+                text = "Newly!",
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
         },
         navigationIcon = {
-            Icon(Icons.Default.Menu, contentDescription = null)
+            Icon(Icons.Default.Menu, contentDescription = null, modifier = Modifier.clickable { onMenu.invoke() })
         },
         actions = {
-            Icon(Icons.Default.Search, contentDescription = null)
+            Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.clickable{ onSearch.invoke() })
         }
     )
 }
@@ -38,6 +42,6 @@ fun Topbar() {
 @Composable
 private fun TopbarPreview() {
     NewlyTheme {
-        Topbar()
+        Topbar({}, {})
     }
 }
