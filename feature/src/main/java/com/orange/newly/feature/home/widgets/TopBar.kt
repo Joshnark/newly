@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.orange.newly.feature.shared.NewlyTheme
+import com.orange.newly.feature.shared.theme.NewlyTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

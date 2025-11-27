@@ -7,12 +7,12 @@ import com.orange.newly.domain.models.New
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class SourcedNewsUseCase @Inject constructor(
+class GetCategoryNewsUseCase @Inject constructor(
     private val newsRepository: NewsRepository
 ) {
 
-    operator fun invoke(query: String): Flow<PagingData<New>> {
-        return newsRepository.searchNews(query)
+    operator fun invoke(category: Category): Flow<PagingData<New>> {
+        return newsRepository.getNewsByCategory(category)
     }
 
 }

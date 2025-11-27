@@ -23,7 +23,7 @@ import com.orange.newly.domain.models.ListType
     ]
 )
 data class NewEntryEntity(
-    val newId: Long,
+    val newId: String,
     val listType: ListType,
     val category: Category,
     val position: Int,

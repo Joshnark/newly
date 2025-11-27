@@ -1,4 +1,4 @@
-package com.orange.newly.feature.shared
+package com.orange.newly.feature.shared.theme
 
 import androidx.compose.ui.graphics.Color
 

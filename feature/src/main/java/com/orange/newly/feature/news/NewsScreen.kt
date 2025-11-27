@@ -26,15 +26,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.orange.newly.domain.models.Category
 import com.orange.newly.feature.news.widgets.ForYouPage
-import com.orange.newly.feature.news.widgets.TopNewsPage
-import com.orange.newly.feature.shared.NewlyTheme
+import com.orange.newly.feature.news.widgets.CategoryNewsPage
+import com.orange.newly.feature.shared.theme.NewlyTheme
 import kotlinx.coroutines.launch
 
 @Composable
 fun NewsScreen() {
     val scope = rememberCoroutineScope()
     val categories = Category.entries
-    val initialIndex = categories.indexOf(Category.GENERAL)
+    val initialIndex = categories.indexOf(Category.HOME)
 
     val selectedNavigationIndex = rememberSaveable {
         mutableIntStateOf(initialIndex)
@@ -64,8 +64,8 @@ fun NewsScreen() {
             userScrollEnabled = false
         ) { page ->
             when(categories[page]) {
-                Category.GENERAL -> ForYouPage()
-                else -> TopNewsPage()
+                Category.HOME -> ForYouPage()
+                else -> CategoryNewsPage()
             }
         }
     }
@@ -116,7 +116,7 @@ fun CategoryItem(category: Category, isSelected: Boolean, onClick: (Category) ->
 
 val Category.title
     get() = when(this) {
-        Category.GENERAL -> "For you"
+        Category.HOME -> "For you"
         else -> this.value
     }
 

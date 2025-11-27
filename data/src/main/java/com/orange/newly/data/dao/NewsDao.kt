@@ -16,7 +16,7 @@ interface NewsDao {
     suspend fun insert(news: List<NewEntity>)
 
     @Query("SELECT * FROM news WHERE id = :id")
-    suspend fun getById(id: Long)
+    suspend fun getById(id: Long): NewEntity
 
     @Query("""
         SELECT news.* from news
@@ -24,15 +24,15 @@ interface NewsDao {
         WHERE news_entries.listType = 'POPULAR'
         ORDER BY news_entries.position ASC
     """)
-    suspend fun getPopularNews(): Flow<List<NewEntity>>
+    fun getPopularNews(): Flow<List<NewEntity>>
 
     @Query("""
         SELECT news.* from news
         INNER JOIN news_entries ON news.id = news_entries.newId
-        WHERE news_entries.listType = 'RECOMMENDED'
+        WHERE news_entries.listType = 'TOP'
         ORDER BY news_entries.position ASC
     """)
-    suspend fun getRecommendedNews(): Flow<List<NewEntity>>
+    fun getTopNews(): Flow<List<NewEntity>>
 
 
     @Query("""
@@ -42,6 +42,6 @@ interface NewsDao {
         AND news_entries.category = :category
         ORDER BY news_entries.position ASC
     """)
-    suspend fun getCategoryNews(category: Category): PagingSource<Int, NewEntity>
+    fun getCategoryNews(category: Category): PagingSource<Int, NewEntity>
 
 }

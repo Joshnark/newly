@@ -3,6 +3,8 @@ package com.orange.newly.data.di
 import android.content.Context
 import com.orange.newly.data.AppDatabase
 import com.orange.newly.data.dao.NewsDao
+import com.orange.newly.data.dao.NewsEntriesDao
+import com.orange.newly.data.dao.NewsPaginationDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,6 +37,18 @@ class DatabaseModule {
     @Singleton
     fun provideTopNewsDao(appDatabase: AppDatabase): NewsDao {
         return appDatabase.getNewsDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsEntriesDao(appDatabase: AppDatabase): NewsEntriesDao {
+        return appDatabase.getNewsEntriesDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsPaginationDao(appDatabase: AppDatabase): NewsPaginationDao {
+        return appDatabase.getNewsPaginationDao()
     }
 
 }

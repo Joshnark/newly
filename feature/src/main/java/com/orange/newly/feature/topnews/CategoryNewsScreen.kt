@@ -5,7 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun TopNewsScreen() {
+fun CategoryNewsScreen() {
     Surface {
         Text("Top news by category")
     }

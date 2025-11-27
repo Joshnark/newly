@@ -1,7 +1,7 @@
 package com.orange.newly.domain.models
 
 enum class Category(val value: String) {
-    GENERAL("general"),
+    HOME("home"),
     BUSINESS("business"),
     ENTERTAINMENT("entertainment"),
     HEALTH("health"),

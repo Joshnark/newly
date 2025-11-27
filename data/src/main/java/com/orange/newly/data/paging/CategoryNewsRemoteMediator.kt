@@ -37,10 +37,10 @@ class CategoryNewsRemoteMediator @AssistedInject constructor(
                 LoadType.APPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             }
 
-            val items = dataSource.get(category, page, state.config.pageSize).toEntity(category, page)
-            dataStore.addTopNews(items, loadType == LoadType.REFRESH)
+//            val items = dataSource.get(category, page, state.config.pageSize).toEntity(category, page)
+//            dataStore.addTopNews(items, loadType == LoadType.REFRESH)
 
-            MediatorResult.Success(endOfPaginationReached = items.isEmpty())
+            MediatorResult.Success(endOfPaginationReached = true)
         }.getOrElse { exception ->
             MediatorResult.Error(exception)
         }

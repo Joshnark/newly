@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.orange.newly.navigation.NewlyNavGraph
-import com.orange.newly.feature.shared.NewlyTheme
+import com.orange.newly.feature.shared.theme.NewlyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

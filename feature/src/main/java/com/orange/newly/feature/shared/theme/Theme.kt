@@ -1,4 +1,4 @@
-package com.orange.newly.feature.shared
+package com.orange.newly.feature.shared.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

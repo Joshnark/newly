@@ -1,14 +1,15 @@
 package com.orange.newly.feature.foryou
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,57 +27,70 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
 import com.orange.newly.domain.models.New
-import com.orange.newly.feature.shared.NewlyTheme
-import kotlinx.coroutines.flow.Flow
+import com.orange.newly.feature.foryou.viewmodel.ForYouIntent
+import com.orange.newly.feature.foryou.viewmodel.ForYouUIState
+import com.orange.newly.feature.shared.theme.NewlyTheme
 import kotlinx.coroutines.flow.flowOf
 
 @Composable
 fun ForYouScreen(
-    recommendedPagingData: LazyPagingItems<New>,
+    state: ForYouUIState,
+    onEvent: (ForYouIntent) -> Unit
 ) {
     LazyColumn {
         item {
-            val state = rememberPagerState(initialPage = 0, pageCount = { 2 })
-
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text("Near you", modifier = Modifier.padding(horizontal = 8.dp))
-
-                HorizontalPager(
-                    state = state,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Card(
-                        colors = CardDefaults.cardColors(Color.Transparent),
-                        shape = RoundedCornerShape(10.dp),
-                        elevation = CardDefaults.cardElevation(1.dp),
-                        modifier = Modifier.fillMaxWidth().padding(8.dp)
-                    ) {
-                        AsyncImage(
-                            model = "https://img.freepik.com/free-photo/closeup-scarlet-macaw-from-side-view-scarlet-macaw-closeup-head_488145-3540.jpg?semt=ais_hybrid&w=740&q=80",
-                            contentDescription = "Translated description of what the image contains",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxWidth().aspectRatio(1.4f)
-                        )
-                    }
-                }
-            }
+            PopularNewsSection(state)
         }
 
         item {
-            Text("Recommended", modifier = Modifier.padding(horizontal = 8.dp))
+            TopStoriesTitle()
         }
 
-        items(recommendedPagingData.itemCount) {
-            recommendedPagingData[it]?.let { item ->
-                NewItem(item)
+        items(state.topNews) { item ->
+            NewItem(item)
+        }
+    }
+}
+
+@Composable
+fun PopularNewsSection(state: ForYouUIState) {
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { 2 })
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        PopularViewsTitle()
+
+        HorizontalPager(
+            state = pagerState,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Card(
+                colors = CardDefaults.cardColors(Color.Transparent),
+                shape = RoundedCornerShape(10.dp),
+                elevation = CardDefaults.cardElevation(1.dp),
+                modifier = Modifier.fillMaxWidth().padding(8.dp)
+            ) {
+                AsyncImage(
+                    model = "https://img.freepik.com/free-photo/closeup-scarlet-macaw-from-side-view-scarlet-macaw-closeup-head_488145-3540.jpg?semt=ais_hybrid&w=740&q=80",
+                    contentDescription = "Translated description of what the image contains",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxWidth().aspectRatio(1.4f)
+                )
             }
         }
-
     }
+}
+
+@Composable
+fun PopularViewsTitle() {
+    Text("Popular Views", modifier = Modifier.padding(horizontal = 8.dp))
+}
+
+@Composable
+fun TopStoriesTitle() {
+    Text("Top Stories", modifier = Modifier.padding(horizontal = 8.dp))
 }
 
 @Composable
@@ -95,7 +109,7 @@ fun NewItem(new: New) {
             modifier = Modifier.weight(0.7f),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text(new.source)
+            Text(new.source.orEmpty())
 
             Text(
                 new.title,
@@ -122,30 +136,36 @@ fun NewItem(new: New) {
 @Preview(device = Devices.PIXEL, backgroundColor = 0xffffffff, showBackground = true)
 @Composable
 private fun ForYouScreenPreview() {
+    val mockList = listOf(
+        New(
+            title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            author = "John Doe | Josh Doe | Juan Doe",
+            content = "lorem ipsum",
+            description = "lorem ipsum",
+            publishedAt = "12/12/1212",
+            source = "source",
+            url = "asd",
+            urlToImage = "1243asdgfaf"
+        ),
+        New(
+            title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            author = "John Doe | Josh Doe | Juan Doe",
+            content = "lorem ipsum",
+            description = "lorem ipsum",
+            publishedAt = "12/12/1212",
+            source = "source",
+            url = "asd",
+            urlToImage = "1243asdgfaf"
+        )
+    )
+
     NewlyTheme {
         ForYouScreen(
-            recommendedPagingData = flowOf(PagingData.from(listOf(
-                New(
-                    title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                    author = "John Doe | Josh Doe | Juan Doe",
-                    content = "lorem ipsum",
-                    description = "lorem ipsum",
-                    publishedAt = "12/12/1212",
-                    source = "source",
-                    url = "asd",
-                    urlToImage = "1243asdgfaf"
-                ),
-                New(
-                    title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                    author = "John Doe | Josh Doe | Juan Doe",
-                    content = "lorem ipsum",
-                    description = "lorem ipsum",
-                    publishedAt = "12/12/1212",
-                    source = "source",
-                    url = "asd",
-                    urlToImage = "1243asdgfaf"
-                )
-            ))).collectAsLazyPagingItems()
+            state = ForYouUIState(
+                popularNews = mockList,
+                topNews = mockList
+            ),
+            onEvent = {}
         )
     }
 }

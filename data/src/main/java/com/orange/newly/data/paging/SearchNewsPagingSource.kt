@@ -22,18 +22,19 @@ class SearchNewsPagingSource @AssistedInject constructor(
     override suspend fun load(
         params: LoadParams<Int>
     ): LoadResult<Int, PopularNewDto> {
-        return runCatching {
-            val page = params.key ?: INITIAL_PAGE
-            val items = dataSource.searchNews(query, page)
-
-            LoadResult.Page(
-                data = items,
-                prevKey = null,
-                nextKey = if (items.isEmpty()) page.inc() else null
-            )
-        }.getOrElse { exception ->
-            LoadResult.Error(exception)
-        }
+//        return runCatching {
+//            val page = params.key ?: INITIAL_PAGE
+//            val items = dataSource.searchNews(query, page)
+//
+//            LoadResult.Page(
+//                data = items,
+//                prevKey = null,
+//                nextKey = if (items.isEmpty()) page.inc() else null
+//            )
+//        }.getOrElse { exception ->
+//            LoadResult.Error(exception)
+//        }
+        return LoadResult.Error(Exception())
     }
 
     override fun getRefreshKey(state: PagingState<Int, PopularNewDto>): Int? {

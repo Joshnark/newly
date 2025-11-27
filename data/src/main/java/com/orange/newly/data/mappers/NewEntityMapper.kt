@@ -16,4 +16,6 @@ fun NewEntity.toDomain() = New(
     urlToImage = this.urlToImage,
 )
 
+fun List<NewEntity>.toDomain() = this.map { it.toDomain() }
+
 fun PagingData<NewEntity>.toDomain() = this.map { it.toDomain() }
