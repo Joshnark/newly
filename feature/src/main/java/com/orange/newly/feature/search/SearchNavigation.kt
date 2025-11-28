@@ -1,5 +1,7 @@
 package com.orange.newly.feature.search
 
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.remember
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -16,7 +18,11 @@ fun NavGraphBuilder.searchPage() {
         val viewmodel = hiltViewModel<SearchViewModel>()
         val pagingItems = viewmodel.newsPagingData.collectAsLazyPagingItems()
 
+        val snackbarHostState = remember { SnackbarHostState() }
+
+
         SearchScreen(
+            snackbarHostState = snackbarHostState,
             pagingItems = pagingItems,
             onEvent = { viewmodel.setIntent(it) }
         )

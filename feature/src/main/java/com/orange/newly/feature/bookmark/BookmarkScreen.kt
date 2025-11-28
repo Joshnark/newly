@@ -7,6 +7,6 @@ import androidx.compose.runtime.Composable
 @Composable
 fun BookmarkScreen() {
     Surface {
-        Text("Bookmark")
+        Text("Bookmark") // Last time decision, not enough time to do this so I don't add this
     }
 }

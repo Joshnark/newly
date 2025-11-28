@@ -40,11 +40,13 @@ android {
     buildFeatures {
         compose = true
     }
+
+
 }
 
 dependencies {
     implementation(projects.domain)
-    implementation(platform(libs.androidx.compose.bom))
+    implementation(platform(libs.compose.bom))
     implementation(platform(libs.result4k.bom))
 
     implementation(libs.bundles.compose)
@@ -56,7 +58,7 @@ dependencies {
     testImplementation(libs.bundles.compose.test)
     implementation(libs.result4k)
 
-    implementation(libs.androidx.core.ktx)
+    implementation(libs.core.ktx)
     implementation(libs.kotlin.serialization.json)
 
     implementation(libs.hilt)
@@ -64,5 +66,5 @@ dependencies {
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.espresso.core)
 }

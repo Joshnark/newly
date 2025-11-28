@@ -3,6 +3,7 @@ package com.orange.newly.feature.news.widgets
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,6 +14,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import com.orange.newly.domain.models.Category
 import com.orange.newly.feature.shared.Sizes
+import com.orange.newly.feature.shared.extensions.paddingMedium
 import com.orange.newly.feature.shared.extensions.paddingSmall
 
 @Composable
@@ -21,9 +23,9 @@ fun CategoryItem(category: Category, isSelected: Boolean, onClick: (Category) ->
         modifier = Modifier
             .background(
                 color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
-                shape = RoundedCornerShape(Sizes.SMALL)
+                shape = RoundedCornerShape(Sizes.LARGE)
             )
-            .paddingSmall()
+            .padding(horizontal = Sizes.LARGE, vertical = Sizes.MEDIUM)
             .clickable(
                 onClick = {
                     onClick.invoke(category)
@@ -45,5 +47,9 @@ fun CategoryItem(category: Category, isSelected: Boolean, onClick: (Category) ->
 val Category.title
     get() = when(this) {
         Category.HOME -> "For you"
-        else -> this.value
+        Category.BUSINESS -> "Business"
+        Category.HEALTH -> "Health"
+        Category.SCIENCE -> "Science"
+        Category.SPORTS -> "Sports"
+        Category.TECH -> "Technology"
     }

@@ -1,8 +1,8 @@
 package com.orange.newly.data.datasources
 
 import com.orange.newly.data.api.NewsApi
-import com.orange.newly.data.errors.NetworkException
-import com.orange.newly.data.errors.TooManyRequestsException
+import com.orange.newly.domain.exceptions.NetworkException
+import com.orange.newly.domain.exceptions.TooManyRequestsException
 import com.orange.newly.data.models.PopularNewDto
 import com.orange.newly.data.models.SearchNewDto
 import com.orange.newly.data.models.TopNewDto

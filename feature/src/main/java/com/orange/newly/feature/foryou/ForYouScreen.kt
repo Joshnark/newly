@@ -16,11 +16,12 @@ import com.orange.newly.feature.shared.widgets.NewItem
 @Composable
 fun ForYouScreen(
     state: ForYouUIState,
-    onEvent: (ForYouIntent) -> Unit
+    onEvent: (ForYouIntent) -> Unit,
+    onOpenDetail: (New) -> Unit
 ) {
     LazyColumn {
         item {
-            PopularNewsSection(state)
+            PopularNewsSection(state, onOpenDetail)
         }
 
         item {
@@ -28,7 +29,7 @@ fun ForYouScreen(
         }
 
         items(state.topNews) { item ->
-            NewItem(item)
+            NewItem(item, onOpenDetail)
         }
     }
 }
@@ -37,6 +38,7 @@ fun ForYouScreen(
 private fun ForYouScreenPreview() {
     val mockList = listOf(
         New(
+            id ="12",
             title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
             author = "John Doe | Josh Doe | Juan Doe",
             content = "lorem ipsum",
@@ -47,6 +49,7 @@ private fun ForYouScreenPreview() {
             urlToImage = "1243asdgfaf"
         ),
         New(
+            id ="12",
             title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
             author = "John Doe | Josh Doe | Juan Doe",
             content = "lorem ipsum",
@@ -64,7 +67,8 @@ private fun ForYouScreenPreview() {
                 popularNews = mockList,
                 topNews = mockList
             ),
-            onEvent = {}
+            onEvent = {},
+            onOpenDetail = {}
         )
     }
 }

@@ -4,3 +4,5 @@ interface AppError
 
 data class GeneralError(val throwable: Throwable? = null): AppError
 data class NetworkError(val throwable: Throwable? = null): AppError
+
+data object NewNotFoundError: AppError

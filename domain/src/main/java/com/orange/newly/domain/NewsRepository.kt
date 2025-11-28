@@ -14,6 +14,8 @@ interface NewsRepository {
     fun getTopNews(): Flow<List<New>>
     fun getPopularNews(): Flow<List<New>>
 
+    suspend fun getNewById(id: String): Result<New, AppError>
+
 
     suspend fun refreshTopNews(): Result<Unit, AppError>
     suspend fun refreshPopularNews(): Result<Unit, AppError>

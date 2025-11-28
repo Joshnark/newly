@@ -22,4 +22,6 @@ interface NewsDataStore {
     suspend fun getCategoryNewsPaginationState(category: Category): NewsPaginationStateEntity?
 
     suspend fun insertCategoryNewsPaginationState(state: NewsPaginationStateEntity)
+
+    suspend fun getNew(id: String): NewEntity?
 }

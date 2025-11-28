@@ -1,5 +1,6 @@
 package com.orange.newly.domain
 
+import com.orange.newly.domain.usecases.GetNewUseCase
 import com.orange.newly.domain.usecases.GetPopularNewsUseCase
 import com.orange.newly.domain.usecases.GetTopNewsUseCase
 import com.orange.newly.domain.usecases.RefreshPopularNewsUseCase
@@ -29,5 +30,8 @@ class DomainDI {
 
     @Provides
     fun provideSearchNewsUseCase(repository: NewsRepository) = SearchNewsUseCase(repository)
+
+    @Provides
+    fun provideGetNewUseCase(repository: NewsRepository) = GetNewUseCase(repository)
 
 }

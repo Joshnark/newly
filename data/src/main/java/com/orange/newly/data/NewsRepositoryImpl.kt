@@ -13,17 +13,16 @@ import com.orange.newly.data.paging.SearchNewsPagingSource
 import com.orange.newly.domain.NewsRepository
 import com.orange.newly.domain.errors.AppError
 import com.orange.newly.domain.errors.NetworkError
+import com.orange.newly.domain.errors.NewNotFoundError
 import com.orange.newly.domain.models.Category
 import com.orange.newly.domain.models.New
 import dev.forkhandles.result4k.Failure
 import dev.forkhandles.result4k.Result
 import dev.forkhandles.result4k.Success
-import dev.forkhandles.result4k.asFailure
 import dev.forkhandles.result4k.asResultOr
 import dev.forkhandles.result4k.asSuccess
 import dev.forkhandles.result4k.resultFrom
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -74,5 +73,9 @@ class NewsRepositoryImpl @Inject constructor(
             is Success -> dataStore.addTopNews(apiResult.value.toEntity()).asSuccess()
             is Failure -> Failure(NetworkError(apiResult.reason))
         }
+    }
+
+    override suspend fun getNewById(id: String): Result<New, AppError> {
+        return dataStore.getNew(id)?.toDomain().asResultOr { NewNotFoundError }
     }
 }

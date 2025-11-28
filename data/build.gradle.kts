@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.devtools)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.android.junit5)
 }
 
 android {
@@ -43,23 +44,21 @@ android {
 dependencies {
     implementation(projects.domain)
 
-    implementation(libs.androidx.core.ktx)
-
+    implementation(platform(libs.result4k.bom))
+    implementation(libs.result4k)
+    implementation(libs.core.ktx)
+    implementation(libs.hilt)
     implementation(libs.bundles.room)
     implementation(libs.bundles.retrofit)
     implementation(libs.bundles.paging)
 
-    testImplementation(libs.room.test)
-    testImplementation(libs.paging.test)
-
-    implementation(platform(libs.result4k.bom))
-    implementation(libs.result4k)
-
-    implementation(libs.hilt)
     ksp(libs.hilt.compiler)
     ksp(libs.room.compiler)
 
-    testImplementation(libs.junit)
+    testImplementation(libs.room.test)
+    testImplementation(libs.paging.testing)
+    testImplementation(libs.bundles.testing)
+
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.espresso.core)
 }

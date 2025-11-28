@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -30,10 +31,24 @@ fun Topbar(
             )
         },
         navigationIcon = {
-            Icon(Icons.Default.Menu, contentDescription = null, modifier = Modifier.clickable { onMenu.invoke() })
+            IconButton(
+                content = {
+                    Icon(Icons.Filled.Menu, contentDescription = null)
+                },
+                onClick = {
+                    onMenu.invoke()
+                }
+            )
         },
         actions = {
-            Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.clickable{ onSearch.invoke() })
+            IconButton(
+                content = {
+                    Icon(Icons.Filled.Search, contentDescription = null)
+                },
+                onClick = {
+                    onSearch.invoke()
+                }
+            )
         }
     )
 }

@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.debounce
@@ -26,16 +27,11 @@ class SearchViewModel @Inject constructor(
     searchNewsUseCase: SearchNewsUseCase
 ): ViewModel() {
 
-    private companion object {
-        const val SEARCH_DEBOUNCE_DELAY = 300L
-    }
-
     private val _pagingParams = MutableStateFlow("")
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     val newsPagingData: Flow<PagingData<New>> = _pagingParams
         .filterNotNull()
-        .debounce(SEARCH_DEBOUNCE_DELAY)
         .flatMapLatest { params ->
             searchNewsUseCase.invoke(
                 query = params
@@ -55,6 +51,8 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun changeQuery(query: String) {
+        if (_pagingParams.value == query) return
+
         _pagingParams.value = query
     }
 

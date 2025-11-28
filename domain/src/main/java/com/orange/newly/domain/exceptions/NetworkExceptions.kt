@@ -1,4 +1,4 @@
-package com.orange.newly.data.errors
+package com.orange.newly.domain.exceptions
 
 import java.lang.Exception
 

@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
+    implementation(libs.core.ktx)
 
     implementation(platform(libs.result4k.bom))
     implementation(libs.result4k)
@@ -47,7 +47,7 @@ dependencies {
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
-    testImplementation(libs.junit)
+    testImplementation(libs.bundles.testing)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.espresso.core)
 }

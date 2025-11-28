@@ -1,6 +1,7 @@
 package com.orange.newly.domain.models
 
 data class New(
+    val id: String,
     val author: String,
     val content: String,
     val description: String,

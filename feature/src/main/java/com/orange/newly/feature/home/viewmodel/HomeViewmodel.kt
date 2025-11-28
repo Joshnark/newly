@@ -1,4 +1,4 @@
-package com.orange.newly.feature.category.viewmodel
+package com.orange.newly.feature.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,20 +22,15 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoryViewmodel @Inject constructor(
-    getCategoryNewsUseCase: GetCategoryNewsUseCase
+class HomeViewmodel @Inject constructor(
+    private val getCategoryNewsUseCase: GetCategoryNewsUseCase
 ): ViewModel() {
-
-    private companion object {
-        const val SEARCH_DEBOUNCE_DELAY = 300L
-    }
 
     private val _pagingParams = MutableStateFlow<Category?>(null)
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     val newsPagingData: Flow<PagingData<New>> = _pagingParams
         .filterNotNull()
-        .debounce(SEARCH_DEBOUNCE_DELAY)
         .flatMapLatest { params ->
             getCategoryNewsUseCase.invoke(
                 category = params
@@ -48,11 +43,9 @@ class CategoryViewmodel @Inject constructor(
             initialValue = PagingData.empty()
         )
 
-
-
-    fun setIntent(intent: CategoryIntent) {
+    fun setIntent(intent: HomeIntent) {
         when(intent) {
-            is CategoryIntent.LoadCategory -> loadCategory(intent.category)
+            is HomeIntent.LoadCategory -> loadCategory(intent.category)
         }
     }
 

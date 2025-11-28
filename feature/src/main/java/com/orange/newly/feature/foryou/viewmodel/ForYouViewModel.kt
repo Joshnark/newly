@@ -37,6 +37,11 @@ class ForYouViewModel @Inject constructor(
     }
 
     private fun loadData() {
+        loadTopNews()
+        loadPopNews()
+    }
+
+    private fun loadTopNews() {
         viewModelScope.launch {
             getTopNewsUseCase
                 .invoke()
@@ -44,6 +49,7 @@ class ForYouViewModel @Inject constructor(
                     onSuccess = { result ->
                         _state.update {
                             it.copy(
+                                errorLoadingTopNews = null,
                                 topNews = result,
                             )
                         }
@@ -56,13 +62,18 @@ class ForYouViewModel @Inject constructor(
                         }
                     }
                 )
+        }
+    }
 
+    private fun loadPopNews() {
+        viewModelScope.launch {
             getPopularNewsUseCase
                 .invoke()
                 .fold(
                     onSuccess = { result ->
                         _state.update {
                             it.copy(
+                                errorLoadingPopularNews = null,
                                 popularNews = result,
                             )
                         }

@@ -18,6 +18,7 @@ import dagger.assisted.AssistedInject
 import dev.forkhandles.result4k.Failure
 import dev.forkhandles.result4k.Success
 import dev.forkhandles.result4k.resultFrom
+import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalPagingApi::class)
 class CategoryNewsRemoteMediator @AssistedInject constructor(
@@ -31,21 +32,36 @@ class CategoryNewsRemoteMediator @AssistedInject constructor(
         fun create(category: Category): CategoryNewsRemoteMediator
     }
 
+    override suspend fun initialize(): InitializeAction {
+        val cacheTimeOut = TimeUnit.HOURS.toMillis(1)
+        val lastUpdated = dataStore.getCategoryNewsPaginationState(category)?.lastUpdated ?: 0
+        val cacheAge = System.currentTimeMillis() - lastUpdated
+
+        return if (cacheAge >= cacheTimeOut) {
+            InitializeAction.LAUNCH_INITIAL_REFRESH
+        } else {
+            InitializeAction.SKIP_INITIAL_REFRESH
+        }
+    }
+
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, NewEntity>
     ): MediatorResult {
         return runCatching {
+            val pageState = dataStore.getCategoryNewsPaginationState(category)
+
             val page = when (loadType) {
                 LoadType.REFRESH -> INITIAL_PAGE
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = false)
                 LoadType.APPEND -> {
-                    val pageState = dataStore.getCategoryNewsPaginationState(category)
                     pageState?.currentPage?.plus(1) ?: INITIAL_PAGE
                 }
             }
 
-            val result = resultFrom { dataSource.getNewsByCategory(category, page) }
+            val result = resultFrom {
+                dataSource.getNewsByCategory(category, page)
+            }
 
             when(result) {
                 is Failure -> {

@@ -61,6 +61,10 @@ class NewsRoomDataStoreImpl @Inject constructor(
         newsPaginationDao.insert(state)
     }
 
+    override suspend fun getNew(id: String): NewEntity? {
+        return newsDao.getById(id)
+    }
+
     private suspend fun addNewAndEntry(news: List<NewEntity>, listType: ListType, category: Category) {
         database.withTransaction {
             newsDao.insert(news)

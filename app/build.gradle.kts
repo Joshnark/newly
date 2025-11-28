@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.devtools)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.android.junit5)
 }
 
 android {
@@ -51,10 +52,10 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.feature)
 
-    implementation(platform(libs.androidx.compose.bom))
+    implementation(platform(libs.compose.bom))
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.core.ktx)
+    implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.navigation)
     debugImplementation(libs.bundles.compose.debug)
@@ -63,8 +64,8 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.compose.ui.test.junit4)
 }

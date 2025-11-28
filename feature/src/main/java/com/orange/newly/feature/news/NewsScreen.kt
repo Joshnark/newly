@@ -1,40 +1,21 @@
 package com.orange.newly.feature.news
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.orange.newly.domain.models.Category
+import com.orange.newly.domain.models.New
 import com.orange.newly.feature.news.widgets.Categories
-import com.orange.newly.feature.news.widgets.ForYouPage
-import com.orange.newly.feature.news.widgets.CategoryNewsPage
-import com.orange.newly.feature.shared.Sizes
-import com.orange.newly.feature.shared.extensions.paddingSmall
+import com.orange.newly.feature.news.widgets.NewsContainer
 import com.orange.newly.feature.shared.theme.NewlyTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun NewsScreen() {
+fun NewsScreen(onOpenDetail: (New) -> Unit) {
     val scope = rememberCoroutineScope()
     val categories = Category.entries
     val initialIndex = categories.indexOf(Category.HOME)
@@ -53,24 +34,21 @@ fun NewsScreen() {
     Column{
         Categories(
             categories = categories,
-            selectedNavigationIndex = selectedNavigationIndex.value,
+            selectedNavigationIndex = selectedNavigationIndex.intValue,
             onClick = {
-                selectedNavigationIndex.value = categories.indexOf(it)
+                selectedNavigationIndex.intValue = categories.indexOf(it)
                 scope.launch {
                     pagerState.animateScrollToPage(categories.indexOf(it))
                 }
             }
         )
 
-        HorizontalPager(
+        NewsContainer(
             state = pagerState,
-            userScrollEnabled = false
-        ) { page ->
-            when(categories[page]) {
-                Category.HOME -> ForYouPage()
-                else -> CategoryNewsPage(categories[page])
-            }
-        }
+            categories = categories,
+            index = selectedNavigationIndex.intValue,
+            onOpenDetail = onOpenDetail
+        )
     }
 }
 
@@ -78,6 +56,6 @@ fun NewsScreen() {
 @Composable
 private fun NewsPreview() {
     NewlyTheme {
-        NewsScreen()
+        NewsScreen {}
     }
 }

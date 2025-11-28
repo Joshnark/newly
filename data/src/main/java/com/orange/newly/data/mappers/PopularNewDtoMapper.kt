@@ -8,7 +8,7 @@ import com.orange.newly.data.models.NewEntity
 import com.orange.newly.domain.models.New
 
 fun PopularNewDto.toEntity() = NewEntity(
-    id = Base64.encodeToString(url.toByteArray(), Base64.URL_SAFE or Base64.NO_WRAP),
+    id = Base64.encodeToString(url.toByteArray(), Base64.URL_SAFE or Base64.NO_WRAP), // I will intentionally leave this here just to mockk static in tests
     author = byline,
     content = abstract,
     description = abstract,
@@ -22,6 +22,7 @@ fun PopularNewDto.toEntity() = NewEntity(
 fun List<PopularNewDto>.toEntity() = this.map { it.toEntity() }
 
 fun PopularNewDto.toDomain() = New(
+    id = Base64.encodeToString(url.toByteArray(), Base64.URL_SAFE or Base64.NO_WRAP),
     author = byline,
     content = abstract,
     description = abstract,

@@ -1,11 +1,13 @@
 package com.orange.newly.data.mappers
 
+import android.util.Base64
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.orange.newly.data.models.NewEntity
 import com.orange.newly.domain.models.New
 
 fun NewEntity.toDomain() = New(
+    id = id,
     title = this.title,
     author = this.author.orEmpty(),
     content = this.content.orEmpty(),

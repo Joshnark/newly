@@ -16,7 +16,7 @@ interface NewsDao {
     suspend fun insert(news: List<NewEntity>)
 
     @Query("SELECT * FROM news WHERE id = :id")
-    suspend fun getById(id: Long): NewEntity
+    suspend fun getById(id: String): NewEntity?
 
     @Query("""
         SELECT news.* from news

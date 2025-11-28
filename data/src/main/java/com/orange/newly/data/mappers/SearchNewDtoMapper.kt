@@ -23,6 +23,7 @@ fun SearchNewDto.toEntity() = NewEntity(
 fun List<SearchNewDto>.toEntity() = this.map { it.toEntity() }
 
 fun SearchNewDto.toDomain() = New(
+    id = Base64.encodeToString(webUrl.toByteArray(), Base64.URL_SAFE or Base64.NO_WRAP),
     author = byline?.original.orEmpty(),
     content = abstract.orEmpty(),
     description = abstract.orEmpty(),
