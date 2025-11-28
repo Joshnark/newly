@@ -59,6 +59,6 @@ dependencies {
     testImplementation(libs.paging.testing)
     testImplementation(libs.bundles.testing)
 
-    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.bundles.testing.instr)
     androidTestImplementation(libs.espresso.core)
 }

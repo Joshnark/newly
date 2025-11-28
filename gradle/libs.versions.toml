@@ -29,14 +29,6 @@ android-junit5 = "1.14.0.0"
 
 [libraries]
 
-# Unit Testing 101
-junit = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-truth = { group = "com.google.truth", name = "truth", version.ref="truth" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk"}
-turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
-
 # Kotlin
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 kotlin-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -47,6 +39,18 @@ kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.re
 # Core
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+
+# Unit Testing 101
+junit = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit" }
+truth = { group = "com.google.truth", name = "truth", version.ref="truth" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk"}
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+
+# Instrumented Testing 101
+androidx-test-core = { group = "androidx.test", name = "core", version = "1.6.1" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version = "1.6.2" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 
 # Architecture Components
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
@@ -111,6 +115,7 @@ lifecycle = ["lifecycle-runtime-ktx", "lifecycle-runtime-compose", "lifecycle-vi
 coil = ["coil", "coil-network"]
 
 testing = [ "junit", "androidx-junit", "truth", "mockk", "turbine", "kotlin-test", "kotlin-coroutines-test"]
+testing-instr = [ "kotlin-test", "androidx-test-core", "androidx-test-runner", "androidx-junit", "room-test", "kotlin-coroutines-test", "turbine" ]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

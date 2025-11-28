@@ -26,20 +26,17 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.mockkStatic
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.experimental.runners.Enclosed
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @DisplayName("News Repository Test Suite")
 @ExtendWith(MockKExtension::class)
-@RunWith(Enclosed::class)
 class NewsRepositoryImplTest {
 
     private lateinit var sut: NewsRepositoryImpl
