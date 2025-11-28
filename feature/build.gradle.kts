@@ -46,25 +46,28 @@ android {
 
 dependencies {
     implementation(projects.domain)
+
     implementation(platform(libs.compose.bom))
     implementation(platform(libs.result4k.bom))
 
+    implementation(libs.result4k)
+    implementation(libs.core.ktx)
+    implementation(libs.kotlin.serialization.json)
+    implementation(libs.hilt)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.lifecycle)
     implementation(libs.bundles.navigation)
     implementation(libs.bundles.coil)
     implementation(libs.bundles.paging)
-    debugImplementation(libs.bundles.compose.debug)
-    testImplementation(libs.bundles.compose.test)
-    implementation(libs.result4k)
 
-    implementation(libs.core.ktx)
-    implementation(libs.kotlin.serialization.json)
-
-    implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
+    debugImplementation(libs.bundles.compose.debug)
+
     testImplementation(libs.junit)
+    testImplementation(libs.bundles.compose.test)
+
+    androidTestImplementation(libs.bundles.compose.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso.core)
 }
