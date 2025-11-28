@@ -4,7 +4,7 @@ A modern Android news application built with Clean Architecture, Jetpack Compose
 
 ## Overview
 
-Newly is a news aggregation app that allows users to browse top news, popular news, news by category, search for specific articles, and view detailed news content. The application demonstrates modern Android development best practices with a multi-module architecture.
+Newly is a news app that implements the New York Times API, allowing users to browse top news, popular news, news by category, search for specific articles, and view detail of those.
 
 ## Architecture
 
@@ -30,10 +30,50 @@ The project follows **Clean Architecture** principles with clear separation of c
 ### Module Dependencies
 
 ```
-app → feature, domain, data
+The domain module doesn't have external dependencies 
 feature → domain
 data → domain
-domain → (no external module dependencies)
+app → feature (also domain and data for DI)
+```
+
+## Project Structure
+
+```
+Newly/
+├── app/                       # Application module
+│   ├── NewlyApp.kt           # Hilt application
+│   ├── NewlyActivity.kt      # Main activity
+│   └── navigation/           # Root navigation graph
+├── domain/                    # Business logic layer
+│   ├── NewsRepository.kt     # Repository interface
+│   ├── models/               # Domain models
+│   ├── usecases/             # Use cases
+│   ├── errors/               # Error definitions
+│   └── DomainDI.kt          # Dependency injection
+├── data/                      # Data access layer
+│   ├── NewsRepositoryImpl.kt # Repository implementation
+│   ├── api/                  # Retrofit API
+│   ├── dao/                  # Room DAOs
+│   ├── datasources/          # API data sources
+│   ├── datastores/           # Local data stores
+│   ├── dto/                  # Data transfer objects
+│   ├── entities/             # Room entities
+│   ├── mappers/              # Data mappers
+│   ├── paging/               # Pagination logic
+│   └── di/                   # Dependency injection
+└── feature/                   # Presentation layer
+    ├── onboarding/           # Onboarding screen
+    ├── home/                 # Home hub screen
+    ├── foryou/               # News feed screen
+    ├── news/                 # Category news screen
+    ├── search/               # Search screen
+    ├── detail/               # Article detail screen
+    ├── bookmark/             # Bookmarks screen
+    └── shared/               # Shared UI components
+        ├── widgets/          # Reusable widgets
+        ├── theme/            # App theming
+        ├── extensions/       # Kotlin extensions
+        └── NavigationRoute.kt # Navigation utilities
 ```
 
 ## Modules
@@ -206,132 +246,36 @@ domain → (no external module dependencies)
 ### Error Handling
 - **Result4k** - Functional Result types
 
-## Key Features
-
-- Browse top news and popular news
-- Explore news by category (Business, Health, Science, Sports, Tech)
-- Search news articles with real-time results
-- View detailed news articles
-- Bookmark articles (planned)
-- Offline-first with smart caching
-- Pull-to-refresh
-- Infinite scroll pagination
-- Error handling and retry mechanisms
-
-## Data Flow
-
-```
-API → NewsDataSource → Repository → Room Database
-                    ↓                    ↓
-              Use Cases (Domain)    Local Cache
-                    ↓
-          ViewModels (Feature)
-                    ↓
-            Compose UI
-```
-
-## Caching Strategy
-
-- **Room Database** as single source of truth
-- **RemoteMediator** for smart cache invalidation
-  - 1-hour cache timeout for category news
-  - Automatic refresh on cache expiration
-- **Pagination State Tracking** for incremental loads
-- Top and Popular news cached separately
-
-## Error Handling
-
-- **Functional Approach** with Result4k
-- **Custom Error Types:**
-  - `GeneralError` - Generic failures
-  - `NetworkError` - Network-related issues
-  - `NewNotFoundError` - Article not found
-- **UI Error States** - User-friendly error messages
-- **Retry Mechanisms** - Pull-to-refresh for recovery
-
-## State Management
-
-- **ForYouViewModel:** MutableStateFlow with explicit Intent actions
-- **SearchViewModel:** Flow-based reactive search with debounce
-- **DetailViewModel:** Sealed state classes (Idle, Success, Error)
-- **Unidirectional Data Flow** following MVI pattern
-
 ## Testing
+
+Given time constraints, I only completed some small test suites, which you will find in the data and feature modules.
 
 The project includes:
 - **Unit Tests** - Repository and API layer
-- **Instrumented Tests** - Room database operations
-- **Compose Tests** - Basic UI testing with paging
-
-## Project Structure
-
-```
-Newly/
-├── app/                       # Application module
-│   ├── NewlyApp.kt           # Hilt application
-│   ├── NewlyActivity.kt      # Main activity
-│   └── navigation/           # Root navigation graph
-├── domain/                    # Business logic layer
-│   ├── NewsRepository.kt     # Repository interface
-│   ├── models/               # Domain models
-│   ├── usecases/             # Use cases
-│   ├── errors/               # Error definitions
-│   └── DomainDI.kt          # Dependency injection
-├── data/                      # Data access layer
-│   ├── NewsRepositoryImpl.kt # Repository implementation
-│   ├── api/                  # Retrofit API
-│   ├── dao/                  # Room DAOs
-│   ├── datasources/          # API data sources
-│   ├── datastores/           # Local data stores
-│   ├── dto/                  # Data transfer objects
-│   ├── entities/             # Room entities
-│   ├── mappers/              # Data mappers
-│   ├── paging/               # Pagination logic
-│   └── di/                   # Dependency injection
-└── feature/                   # Presentation layer
-    ├── onboarding/           # Onboarding screen
-    ├── home/                 # Home hub screen
-    ├── foryou/               # News feed screen
-    ├── news/                 # Category news screen
-    ├── search/               # Search screen
-    ├── detail/               # Article detail screen
-    ├── bookmark/             # Bookmarks screen
-    └── shared/               # Shared UI components
-        ├── widgets/          # Reusable widgets
-        ├── theme/            # App theming
-        ├── extensions/       # Kotlin extensions
-        └── NavigationRoute.kt # Navigation utilities
-```
+- **Instrumented Tests** - Some Room database operations
+- **Compose Tests** - Very basic UI testing with paging
 
 ## Getting Started
 
 ### Prerequisites
 - Android Studio Hedgehog or later
 - JDK 17 or higher
-- Android SDK with API 24+ (target API 34)
 
 ### Setup
 1. Clone the repository
-2. Open project in Android Studio
+2. Open the project in Android Studio
 3. Add your News API key in `local.properties`:
    ```
-   NEWS_API_KEY=your_api_key_here
+   API_TOKEN=your_api_key_here
    ```
 4. Sync Gradle
 5. Run the app
 
 ## Build Configuration
 
-- **Min SDK:** 24 (Android 7.0)
+- **Min SDK:** 23 (Android 7.0)
 - **Target SDK:** 34 (Android 14)
 - **Compile SDK:** 34
 - **Kotlin:** 2.0.21
 - **Gradle:** 8.7
 
-## License
-
-[Your license information here]
-
-## Contributors
-
-[Your contributor information here]
