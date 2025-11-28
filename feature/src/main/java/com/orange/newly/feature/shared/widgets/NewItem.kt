@@ -40,7 +40,7 @@ fun NewItem(new: New, onClick: (New) -> Unit) {
         ) {
             AsyncImage(
                 model = new.urlToImage,
-                contentDescription = "Translated description of what the image contains",
+                contentDescription = "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.size(100.dp).aspectRatio(1f).clip(
                     RoundedCornerShape(Sizes.MEDIUM)

@@ -21,5 +21,13 @@ class NewMotherObj(
 
     companion object {
         val single = NewMotherObj().build()
+
+
+        val list = (0..20).map { index ->
+            NewMotherObj(
+                id = "test-$index",
+                title = "test $index"
+            ).build()
+        }
     }
 }
