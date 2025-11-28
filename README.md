@@ -8,7 +8,7 @@ Newly is a news app that implements the New York Times API, allowing users to br
 
 ## Architecture
 
-The project follows **Clean Architecture** principles with clear separation of concerns across three main layers:
+The project follows **Clean Architecture** principles with clear separation of concerns across three main layers. It follows Google's take on architecture for android apps https://developer.android.com/topic/architecture and Clean Arch principles with some personal touchs based on my experience and some level of simplification based on the simplicity of the project.
 
 ```
 ┌─────────────────────────────────────────┐
@@ -107,9 +107,9 @@ Newly/
 
 ### 2. Data Module
 
-**Purpose:** Data access and management layer
+**Purpose:** Data access and management layer (Also theorically framework-agnostic if we didn't have room and so much other android related deps)
 
-**Architecture Pattern:** Repository + Data Source + Data Store
+**Design Patterns:** Repository + Data Source + Data Store
 
 **Key Components:**
 
@@ -141,6 +141,12 @@ Newly/
 #### Paging
 - `CategoryNewsRemoteMediator` - Smart pagination with 1-hour cache
 - `SearchNewsPagingSource` - Search results pagination
+
+**I would like to make an important consideration here**
+
+`I designed this paging setup in a way the app could have two examples on paging library`
+- Remote Mediator to coordinate API with database for offline-first kind of behaviour
+- Paging Source to convert API result into Paging Data without caching
 
 #### DTOs & Mappers
 - Response models: `PopularNewsResponse`, `TopNewsResponse`, `SearchNewsResponse`
@@ -251,9 +257,9 @@ Newly/
 Given time constraints, I only completed some small test suites, which you will find in the data and feature modules.
 
 The project includes:
-- **Unit Tests** - Repository and API layer
-- **Instrumented Tests** - Some Room database operations
-- **Compose Tests** - Very basic UI testing with paging
+- **Unit Tests** - Repository and API layer in Data Layer Unit Test folder
+- **Instrumented Tests** - Some Room database operations in Data Layer Android Test folder
+- **Compose Tests** - Very basic UI testing with paging in feature Android Test folder
 
 ## Getting Started
 
